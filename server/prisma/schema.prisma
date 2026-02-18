@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// look this for syntax   https://www.prisma.io/docs/orm/reference/prisma-schema-reference
+
+
+//external provider
+generator client {
+  provider = "prisma-client-js"   //generate prisma js client in node modules
+}
+//external provider
+datasource db {
+  provider = "postgresql"
+ 
+}
+
+
+// create type (-) (+)
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
+enum TransactionDirection {
+  INCOME
+  EXPENSE
+}
+
+model User {
+  id           String        @id @default(uuid())  // @id = primary key, auto(uuid)
+  email        String        @unique
+  passwordHash String
+  name         String?                             //?=optional
+  currency     String        @default("USD")
+  timezone     String        @default("America/New_York")
+
+  categories   Category[]            //one to many relation 
+  transactions Transaction[]
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt   //autoupdate
+}
+
+model Category {
+  id        String        @id @default(uuid())
+  userId    String                             //forign Key!!!!
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)//not a column
+
+  name      String
+  type      CategoryType
+
+  transactions Transaction[]               //one to many
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@unique([userId, name])  //unique combo
+  @@index([userId])         //model/table level index
+}
+
+model Transaction {
+  id           String               @id @default(uuid())
+  userId       String
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amountCents  Int
+  direction    TransactionDirection
+  currency     String               @default("USD")
+
+  date         DateTime
+  description  String
+
+  categoryId   String?
+  category     Category?            @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt   //autoupdate
+
+  @@index([userId, date])
+  @@index([userId, categoryId])
+}
