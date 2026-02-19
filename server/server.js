@@ -13,11 +13,9 @@ app.get("/api/home", (req, res)=>{
     res.json({status : "OK" ,message:"Welcome to wallet Wizzard Project"})
 
 })
-
+//Prisma code
 app.get("/api/transaction", async(req, res )=>{
    try{
-
-    // console.log("HIT /api/transaction on", req.socket.localPort);
  const trans = await prisma.transaction.findMany();
  
     if(trans.length ===0){
@@ -35,12 +33,7 @@ app.get("/api/transaction", async(req, res )=>{
    }
 })
 
-
-
-
-
-
-
+//PG SQL
 // app.get("/api/transaction", async (req, res) => {
 //   let client
 //   try {
