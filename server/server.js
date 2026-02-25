@@ -2,9 +2,11 @@ const express = require('express')
 const app = express();//backend
 const prisma  = require("./db")
 const cors = require('cors');//connects backend to frontend
+const transactionItem = require("./routes/transactions")
 const PORT = 3100
 
 app.use(cors())
+app.use(express.json()) // for JSON body parsinng (IMPOSTANT)
 const path = require('path');
 const result = require('dotenv').config({ path: path.resolve(__dirname, '../server/.env.development') });
 
@@ -32,6 +34,15 @@ app.get("/api/transaction", async(req, res )=>{
     res.status(500).json({error:"Failed to get Transaction"})
    }
 })
+
+
+app.use("/api/transactions", transactionItem)
+
+
+
+
+
+
 
 //PG SQL
 // app.get("/api/transaction", async (req, res) => {

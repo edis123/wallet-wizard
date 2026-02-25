@@ -192,12 +192,6 @@ const  transaction = await prisma.transaction.findFirst({
      res.status(500).json({error: error.message})
  }
   
-
-
-
-
-
-
-
-
 })
+
+module.exports = router
