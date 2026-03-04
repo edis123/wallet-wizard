@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
-
+import { apiMethods } from '@/lib/api'
 function Index() {
 
 
@@ -20,6 +20,12 @@ function Index() {
   return (
     <div>{message}</div>
   )
+
+//   useEffect(() => {
+//     apiMethods.api("/api/transactions")
+//       .then((d) => console.log("data", d))
+//       .catch((e) => console.error("err", e.message));
+//   }, []);
 }
 
 export default Index

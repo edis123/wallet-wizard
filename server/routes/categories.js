@@ -3,13 +3,15 @@ const router = express.Router();
 const prisma = require("../db");
 
 
-const User_ID = process.env.User_ID;
 
 // Create
 
 router.post("/", async (req,res)=>{
+  
+    const userId = req.user.id
+    
 try{
-   if(!User_ID) return res.status(401).json({error:"Unauthorized Access!"})
+   if(!userId) return res.status(401).json({error:"Unauthorized Access!"})
 
   const{name, type} = req.body
  
@@ -20,7 +22,7 @@ try{
 
    data:{
 
-    userId: User_ID,
+    userId,
     name,
     type
    }
@@ -36,21 +38,50 @@ catch(error){
 
 }) 
 
+// get ALL categories
 
+
+router.get("/", async(req,res)=>{
+
+ const userId = req.user.id
+    try{
+    
+        if(!userId)  return res.status(401).json({error:"Unauthorized Access!"})
+
+         const cats = await prisma.category.findMany({
+
+            where:{userId},
+            orderBy:{name:"asc"}
+         }
+         )
+
+         res.status(200).json(cats)
+
+        }catch(error){
+
+      console.error(error)
+      res.status(500).json({error:error.message})
+
+
+        }
+
+
+
+})
 // Get by name
 
 router.get("/:name", async (req,res)=>{
-
+     const userId = req.user.id
     try{
     
-        if(!User_ID)  return res.status(401).json({error:"Unauthorized Access!"})
+        if(!userId)  return res.status(401).json({error:"Unauthorized Access!"})
      
         const catName =req.params.name
 
         let cat = await  prisma.category.findFirst({
 
            where:{ 
-            userId:User_ID,
+            userId,
             name:catName
            }
         })
@@ -67,10 +98,10 @@ router.get("/:name", async (req,res)=>{
 
 //update
 router.put("/:name", async (req,res)=>{
-
+      const userId = req.user.id
     try{
     
-        if(!User_ID)  return res.status(401).json({error:"Unauthorized Access!"})
+        if(!userId)  return res.status(401).json({error:"Unauthorized Access!"})
         const oldName = req.params.name
         const {name,type} = req.body
 
@@ -78,7 +109,7 @@ router.put("/:name", async (req,res)=>{
 
         let cat = await  prisma.category.findUnique({
            where:{ userId_name:{  //unique index for faster search
-            userId:User_ID,
+            userId,
             name:oldName
            }
             
@@ -90,7 +121,7 @@ router.put("/:name", async (req,res)=>{
 
         const updated = await prisma.category.update({
       
-            where:{userId_name:{userId:User_ID,name:oldName}},
+            where:{userId_name:{userId,name:oldName}},
             data:{
             
             name,
@@ -112,16 +143,16 @@ router.put("/:name", async (req,res)=>{
 
 
 router.delete("/:name", async (req,res)=>{
-
+const userId = req.user.id  
     try{
     
-        if(!User_ID)  return res.status(401).json({error:"Unauthorized Access!"})
+        if(!userId)  return res.status(401).json({error:"Unauthorized Access!"})
      
         const catName = req.params.name
 
         let catDeleted = await  prisma.category.delete({
 
-           where:{ userId_name:{ userId:User_ID, name:catName} }
+           where:{ userId_name:{ userId, name:catName} }
 
         })
  

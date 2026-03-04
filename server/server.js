@@ -3,6 +3,9 @@ const app = express();//backend
 const prisma  = require("./db")
 const cors = require('cors');//connects backend to frontend
 const transactionItem = require("./routes/transactions")
+const categoryItem = require("./routes/categories")
+const authRouting = require("./routes/auth")
+const authentication = require("./middleware/middleware.auth")
 const PORT = 3100
 
 app.use(cors())
@@ -35,7 +38,9 @@ app.get("/api/transaction", async(req, res )=>{
    }
 })
 
-
+app.use("/api/auth",authRouting)
+app.use(authentication)///enforces authemtication for the following operations
+app.use("/api/categories",categoryItem)
 app.use("/api/transactions", transactionItem)
 
 

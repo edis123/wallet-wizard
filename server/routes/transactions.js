@@ -5,16 +5,16 @@ const router = express.Router()
 const {error} = require("node:console");
 const { uptime } = require("node:process");
 
- const User_ID = process.env.User_ID;
+ 
 
 
 //create 
 
 router.post("/", async (req,res)=>{
-
+const userId = req.user.id
 try{
   
- if(!User_ID) return res.status(401).json({error:"Unauthorized!"})
+ if(!userId) return res.status(401).json({error:"Unauthorized!"})
  const {amountCents, direction, currency, date, description, categoryId} = req.body
 
  if(amountCents=== 0 || amountCents === null || !direction || !date||!description){
@@ -25,7 +25,7 @@ try{
  const newTransaction  = await prisma.transaction.create({
 
     data: {
-        userId: User_ID,
+        userId,
         amountCents,
         direction,
         currency: currency?? undefined,   /// default if undefined
@@ -47,15 +47,15 @@ try{
 // Read ALl
 
 router.get("/", async (req, res )=>{
-
+const userId = req.user.id
     try{
 
-       if(!User_ID) return res.status(401).json("Unauthorized").json // require the user id 
+       if(!userId) return res.status(401).json("Unauthorized") // require the user id 
  
-       let allTransactions = await prisma.findMany({
+       let allTransactions = await prisma.transaction.findMany({
 
 
-         where :{userId: User_ID},
+         where :{userId},
          orderBy:{date:"desc"},
          include: {category:true}  // details about category
        })
@@ -71,16 +71,17 @@ router.get("/", async (req, res )=>{
 
 //  Read by id
 router.get("/:id", async(req,res)=>{
+    const userId = req.user.id
 try{
 
 
- if(!User_ID) return res.status(401).json("Unauthorized").json
+ if(!userId) return res.status(401).json("Unauthorized")
 
  const id = req.params.id                               // get tr id
 
  const  transaction = await prisma.transaction.findFirst({
         
-    where:{id, userId:User_ID},   // tr id and userid should pass
+    where:{id, userId},   // tr id and userid should pass
     include:{category:true}
  
  });
@@ -95,10 +96,11 @@ try{
 })
 //  Read by date // Queries by larger gaps can be implemented(maybe later)
 router.get("/", async(req,res)=>{
+    const userId = req.user.id
 try{
 
 
- if(!User_ID) return res.status(401).json({error:"Unauthorized"}).json
+ if(!userId) return res.status(401).json({error:"Unauthorized"})
 
  const {date} = req.query                           // get the date 
 
@@ -113,7 +115,7 @@ if(isNaN(start.getTime())) return res.status(401).json({error:"Valide date requi
  const  transaction = await prisma.transaction.findMany({
         
     where:{date:{gte:start, lt:end},  //gte: >=   , lt: <  (  time gap)  
-     userId:User_ID},
+     userId},
      orderBy:{date:"desc"},
     include:{category:true}
  
@@ -129,15 +131,16 @@ if(isNaN(start.getTime())) return res.status(401).json({error:"Valide date requi
 
 // Update
 router.put("/:id", async(req,res)=>{
+    const userId = req.user.id
 try{
 
 
- if(!User_ID) return res.status(401).json("Unauthorized").json
+ if(!userId) return res.status(401).json("Unauthorized")
 
  const id = req.params.id                               // get tr id
  const {amountCents, direction, currency,date,description,categoryId} = req.body
  const  transaction = await prisma.transaction.findFirst({
-    where:{id, userId:User_ID},   // tr id and userid should pass
+    where:{id, userId},   // tr id and userid should pass
  });
  
  if(!transaction) return res.status(404).json({error:"NOt Faound"})
@@ -169,11 +172,12 @@ try{
 // Delete
 
 router.delete("/:id", async(req,res)=>{
+    const userId = req.user.id
  try{
-   if(!User_ID) return res.status(401).json("Unauthorized").json
+   if(!userId) return res.status(401).json("Unauthorized")
     const id  = req.params.id
 const  transaction = await prisma.transaction.findFirst({
-    where:{id, userId:User_ID},   // tr id and userid should pass
+    where:{id, userId},   // tr id and userid should pass
  });
  
  if(!transaction) return res.status(404).json({error:"NOt Faound"})
