@@ -6,7 +6,7 @@ type CategoryType = "INCOME"|"EXPENSE"
 
 type Props={onCreated?: (cat:" ")=>void} ///callback 
 
-function CategoryList({onCreated}:Props){
+function CategoryForm({onCreated}:Props){
 
 
  const [name, setName] = useState("")
@@ -95,4 +95,4 @@ return(<form onSubmit={onSubmit} style={{ display: "grid", gap: 10, maxWidth: 42
     </form>)
 }
 
-export default CategoryList
+export default CategoryForm

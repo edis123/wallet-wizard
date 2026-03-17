@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import { fetchMethod } from "@/lib/api";
 import { authTokenMethods } from "@/lib/lib.auth";
+import Title from "@/components/Title";
 
 
 
@@ -52,11 +53,19 @@ function LoginPage(){
   }
 
 return(
-    <div style={{ maxWidth: 420 }}>
-      <h2>Login</h2>
+    <div className="min-h-screen bg-sky-900 flex items-center justify-center sepia-30">
+    <div className="w-full max-w-md bg-orange-400 rounded-2xl shadow-2xl p-8 sepia">
+      <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
+     <Title/>
+    </h1>
+    <p className="text-center text-gray-700 mb-6">
+      Track your income and expenses
+    </p>
+
 
       <form onSubmit={onSubmit} style={{ display: "grid", gap: 10 }}>
         <input
+          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
@@ -65,6 +74,7 @@ return(
         />
 
         <input
+          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
@@ -73,7 +83,8 @@ return(
           style={{ padding: 10, borderRadius: 10, border: "1px solid #ddd" }}
         />
 
-        <button
+        <button  
+          className="w-full bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700 transition"
           disabled={busy}
           style={{
             padding: 10,
@@ -89,6 +100,7 @@ return(
 
         {error && <div style={{ color: "crimson" }}>{error}</div>}
       </form>
+    </div>
     </div>
   );
 

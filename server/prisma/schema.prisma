@@ -64,7 +64,7 @@ model Transaction {
   id           String               @id @default(uuid())
   userId       String
   user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  clientRequestId String?
   amountCents  Int
   direction    TransactionDirection
   currency     String               @default("USD")
@@ -77,7 +77,9 @@ model Transaction {
 
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt   //autoupdate
+  deletedAt    DateTime?                          // null= active
 
+ @@unique([userId,clientRequestId])  // indexes for fast lookup
   @@index([userId, date])
   @@index([userId, categoryId])
 }

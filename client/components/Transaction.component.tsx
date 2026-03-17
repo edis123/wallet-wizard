@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import { fetchMethod } from "@/lib/api";
  import { useEffect,useState } from "react";
 import { moneyMethods } from "@/lib/money";
+import { ClientRequest } from "http";
+import { redirect } from "next/dist/server/api-utils";
 
 type Direction = "INCOME" | "EXPENSE"
 type CategoryType  = "INCOME" | "EXPENSE"
@@ -10,7 +12,7 @@ type Category ={id: string, name:string, type: CategoryType}
 
 type Props={categories: Category[],onCreated?:(tr: " ")=>void;}///array type, and a callback
 
-function TransactionList({categories,onCreated}:Props ){
+function TransactionForm({categories,onCreated}:Props ){
 
     const [amount, setAmount] = useState("")
     const [description, setDescription] = useState("")
@@ -37,7 +39,8 @@ function TransactionList({categories,onCreated}:Props ){
         direction,
         description,
         date:new Date(date).toISOString(),
-        categoryId:categoryId|| null
+        categoryId:categoryId|| null,
+        clientRequestId: crypto.randomUUID // idempotency!!!!
 
      }
       // create newTransaction by fetching
@@ -66,18 +69,19 @@ function TransactionList({categories,onCreated}:Props ){
     }
  }
 
-    return(<form onSubmit={onSubmit} style={{ display: "grid", gap: 10, maxWidth: 520 }}>
-      <div style={{ display: "grid", gap: 6 }}>
-        <label>Amount (USD)</label>
+    return(<form className= "grid grid-flow-col grid-rows-6" onSubmit={onSubmit} style={{ display: "grid", gap: 10, maxWidth: 520 }}>
+
+      <div className= "row-span-7"  style={{ display: "grid", gap: 6, borderRadius: 10, border:"5px solid black" }}>
+        <label>AMOUNT (USD)</label>
         <input
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="e.g. 12.50"
-          style={{ padding: 10, borderRadius: 10, border: "1px solid #ddd" }}
+          style={{ padding: 2, borderRadius: 10, border: "1px solid #dddd" }}
         />
       </div>
 
-      <div style={{ display: "grid", gap: 6 }}>
+      <div className= "row-span-7 "  style={{ display: "grid", gap: 6 }}>
         <label>Direction</label>
         <select
           value={direction}
@@ -89,7 +93,7 @@ function TransactionList({categories,onCreated}:Props ){
         </select>
       </div>
 
-      <div style={{ display: "grid", gap: 6 }}>
+      <div className= "row-span-7"  style={{ display: "grid", gap: 6 }}>
         <label>Description</label>
         <input
           value={description}
@@ -99,7 +103,7 @@ function TransactionList({categories,onCreated}:Props ){
         />
       </div>
 
-      <div style={{ display: "grid", gap: 6 }}>
+      <div className= "row-span-7"  style={{ display: "grid", gap: 6 }}>
         <label>Date</label>
         <input
           type="date"
@@ -109,7 +113,7 @@ function TransactionList({categories,onCreated}:Props ){
         />
       </div>
 
-      <div style={{ display: "grid", gap: 6 }}>
+      <div className= "row-span-7"  style={{ display: "grid", gap: 6 }}>
         <label>Category (optional)</label>
         <select
           value={categoryId}
@@ -146,4 +150,4 @@ function TransactionList({categories,onCreated}:Props ){
     </form>)
 }
 
-export default TransactionList
+export default TransactionForm

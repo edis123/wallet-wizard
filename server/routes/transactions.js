@@ -8,20 +8,33 @@ const { uptime } = require("node:process");
  
 
 
-//create 
+//create (with idempotency)
 
 router.post("/", async (req,res)=>{
 const userId = req.user.id
 try{
   
  if(!userId) return res.status(401).json({error:"Unauthorized!"})
- const {amountCents, direction, currency, date, description, categoryId} = req.body
+ const {amountCents, direction, currency, date, description, categoryId, clientRequestId} = req.body
+ 
+//  if(amountCents=== 0 || amountCents === null || !direction || !date||!description){
 
- if(amountCents=== 0 || amountCents === null || !direction || !date||!description){
+//     return res.status(400).json({error:"BAD REQUEST /n Amount, Direction, Date , Description are required!"})
+//  }
+ if(clientRequestId){
+    const existingTr = await prisma.transaction.findUnique({
+ 
+     where:{
+       userId_clientReqId:{userId,clientRequestId}  //use unique index 
+     }
 
-    return res.status(400).json({error:"BAD REQUEST /n Amount, Direction, Date , Description are required!"})
+ }) 
+
+ if(existingTr) res.status(200).json(existingTr)
+
  }
-   
+ 
+
  const newTransaction  = await prisma.transaction.create({
 
     data: {
@@ -32,7 +45,7 @@ try{
         date,
         description,
         categoryId: categoryId?? null,
-      
+        clientRequestId,
     }
 
  })
@@ -55,7 +68,7 @@ const userId = req.user.id
        let allTransactions = await prisma.transaction.findMany({
 
 
-         where :{userId},
+         where :{userId, deletedAt:null},
          orderBy:{date:"desc"},
          include: {category:true}  // details about category
        })
@@ -81,7 +94,7 @@ try{
 
  const  transaction = await prisma.transaction.findFirst({
         
-    where:{id, userId},   // tr id and userid should pass
+    where:{id, userId, deletedAt:null},   // tr id and userid should pass
     include:{category:true}
  
  });
@@ -95,7 +108,7 @@ try{
 }
 })
 //  Read by date // Queries by larger gaps can be implemented(maybe later)
-router.get("/", async(req,res)=>{
+router.get("/by-date", async(req,res)=>{
     const userId = req.user.id
 try{
 
@@ -145,16 +158,22 @@ try{
  
  if(!transaction) return res.status(404).json({error:"NOt Faound"})
 
+
+   const data = {};
+
+    if (amountCents !== undefined) data.amountCents = amountCents;
+    if (direction !== undefined) data.direction = direction;
+    if (currency !== undefined) data.currency = currency;
+    if (date !== undefined) data.date = date;
+    if (description !== undefined) data.description = description;
+    if (categoryId !== undefined) data.categoryId = categoryId;
+
   const transUpdated = await prisma.transaction.update({
     where:{id},
-    data:{
-        amountCents,
-        direction,
-        currency,
-        date,
-        description,
-        categoryId: categoryId??null
-    }
+    data,
+      include: {
+    category: true
+  }
 
   })
 
@@ -176,19 +195,21 @@ router.delete("/:id", async(req,res)=>{
  try{
    if(!userId) return res.status(401).json("Unauthorized")
     const id  = req.params.id
+
 const  transaction = await prisma.transaction.findFirst({
-    where:{id, userId},   // tr id and userid should pass
+    where:{id, userId,deletedAt:null},   // tr id and userid should pass
  });
  
  if(!transaction) return res.status(404).json({error:"NOt Faound"})
   
   
-  await prisma.transaction.delete({
-    where:{id}
+     const del = await prisma.transaction.update({
+    where:{id},
+     data:{deletedAt:new Date()}
 
   })
 
-  res.status(201).json({message:`${transaction} Deleted!`})
+  res.status(200).json({message:`${del} Deleted!`})
      
  }catch(error){
  

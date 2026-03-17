@@ -40,7 +40,6 @@ catch(error){
 
 // get ALL categories
 
-
 router.get("/", async(req,res)=>{
 
  const userId = req.user.id
