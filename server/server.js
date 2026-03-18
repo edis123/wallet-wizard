@@ -14,12 +14,12 @@ const authentication = require("./middleware/middleware.auth")
 const app = express();//backend
 const PORT = 3100
 
-app.use(cors({
-  origin: allowedOrigin,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-}))
-
+// app.use(cors({
+//   origin: allowedOrigin,
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+// }))
+app.use(cors())
 app.options("*",cors())
 app.use(express.json()) // for JSON body parsinng (IMPOSTANT)
 
@@ -47,10 +47,10 @@ app.get("/api/home", (req, res)=>{
 //     res.status(500).json({error:"Failed to get Transaction"})
 //    }
 // })
-
+app.use("/api/title",title)
 app.use("/api/auth",authRouting)
 app.use(authentication)///enforces authemtication for the following operations
-app.use("/api/title",title)
+
 app.use("/api/categories",categoryItem)
 app.use("/api/transactions", transactionItem)
 
