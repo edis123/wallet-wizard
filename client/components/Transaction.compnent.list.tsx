@@ -172,11 +172,11 @@ function TransactionList({ categoryList, loadCategories }: Props) {
         method: "PUT",
         body: JSON.stringify(payload),
       });
-      const userData = await fetchMethod.fetching(`/api/accounts/${updated.userId}`,{
-        method:"GET"
-      })
+      // const userData = await fetchMethod.fetching(`/api/accounts/${updated.userId}`,{
+      //   method:"GET"
+      // })
 
-      setUserName(userData.email);
+      // setUserName(userData.email);
       setTransactions(
         (prev) => prev.map((t) => (t.id === id ? { ...t, ...updated } : t)), ///reorganize list
       );
@@ -249,7 +249,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
             <div className="bg-orange-100 rounded-2xl shadow p-9 w-4xl">
            <Title/>
             <p className="text-gray-500  flex items-center justify-center">Managment Tool</p>
-              <p className="text-gray-500  flex items-center justify-center">{userName}</p>
+              {/* <p className="text-gray-500  flex items-center justify-center">{userName}</p> */}
           </div>
 
         </div>
