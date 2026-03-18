@@ -56,7 +56,7 @@ return(
     <div className="min-h-screen bg-sky-900 flex items-center justify-center sepia-30">
     <div className="w-full max-w-md bg-orange-400 rounded-2xl shadow-2xl p-8 sepia">
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
-     <Title/>
+{/* <Title/> */}
     </h1>
     <p className="text-center text-gray-700 mb-6">
       Track your income and expenses
