@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
-import { apiMethods } from '@/lib/api'
+
 function Index() {
 
 
