@@ -9,7 +9,7 @@ router.get("/",(req,res)=>{
     
   try{
  
-    res.json( {title:"WALLET WIZZARD (v1.0)"})
+    res.json( {title:process.env.NEXT_PUBLIC_APP_TITTLE})
   }catch(err){
 
     console.error(err)
