@@ -8,26 +8,23 @@ const router = express.Router();
 
 // Create account 
 
-router.post("/register", async (req, res) => {
-  const { email, password,name } = req.body;
+router.get("/:id", async (req, res) => {
+  const userId = req.params.id
 
-  // validate
-  if (!email || !password) {
-    return res.status(400).json({ error: "Missing fields" });
-  }
 
-  // hash password
-  const hashed = await bcrypt.hash(password, 10);
-
-  const user = await prisma.user.create({
-    data: {
-      email,
-      passwordHash: hashed,
-      name
-    },
+  try{
+    const user = await prisma.findUnique({
+       where:{ userId}
   });
 
   res.status(201).json(user);
+  }
+  catch(error){
+    console.error(error)
+    res.status(500).json({error:error.message})
+
+  }
+  
 });
 
     

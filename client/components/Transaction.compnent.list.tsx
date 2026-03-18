@@ -20,7 +20,7 @@ type Transaction = {
   category: Category | null;
 };
 
-const title = process.env.TITLE
+
 type CELL = "ID" | "description" | "direction" | "amount" | "date" | "category"; /// helpful for typos and organization
 function TransactionList({ categoryList, loadCategories }: Props) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -39,7 +39,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
   >(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [idToDelete, setIDtoDelete] = useState("");
-
+  const [userName, setUserName]= useState("")
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -172,7 +172,11 @@ function TransactionList({ categoryList, loadCategories }: Props) {
         method: "PUT",
         body: JSON.stringify(payload),
       });
+      const userData = await fetchMethod.fetching(`/api/accounts/${updated.userId}`,{
+        method:"GET"
+      })
 
+      setUserName(userData.email);
       setTransactions(
         (prev) => prev.map((t) => (t.id === id ? { ...t, ...updated } : t)), ///reorganize list
       );
@@ -245,6 +249,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
             <div className="bg-orange-100 rounded-2xl shadow p-9 w-4xl">
            <Title/>
             <p className="text-gray-500  flex items-center justify-center">Managment Tool</p>
+              <p className="text-gray-500  flex items-center justify-center">{userName}</p>
           </div>
 
         </div>
