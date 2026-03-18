@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { fetchMethod } from "@/lib/api";
 
 function Title() {
-  const [title, setTitle] = useState<{ title: string }>({
-    title: "LOADING...",
-  });
+  const [title, setTitle] = useState<{ title: string }>({ title: "LOADING..." });
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -13,7 +13,6 @@ function Title() {
         const titleData = await fetchMethod.fetching("/api/title", {
           method: "GET",
         });
-
         setTitle(titleData);
       } catch (err) {
         if (err instanceof Error) setError(err.message);
@@ -24,10 +23,9 @@ function Title() {
     showTitle();
   }, []);
 
-  return (
-    <div className="text-3xl font-bold text-gray-800 flex  item-center justify-center">
-      {title.title}
-    </div>
-  );
+  if (error) return <div>{error}</div>;
+
+  return <div>{title.title}</div>;
 }
+
 export default Title;
