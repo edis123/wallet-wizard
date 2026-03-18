@@ -9,7 +9,7 @@ router.get("/",(req,res)=>{
     
   try{
  
-    res.json( {title:process.env.NEXT_PUBLIC_APP_TITTLE})
+    res.json( {title:process.env.NEXT_PUBLIC_APP_TITLE})
   }catch(err){
 
     console.error(err)

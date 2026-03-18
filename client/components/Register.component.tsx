@@ -46,12 +46,12 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
       id="authentication-modal"
       tabIndex={-1}
       aria-hidden="false"
-     className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-gray-100"    >
+     className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black/40"    >
       <div className="relative p-4 w-full max-w-md max-h-full">
         {/* <!-- Modal content --> */}
         <div className="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
           {/* <!-- Modal header --> */}
-          <div className="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <div className="flex items-center justify-between border-b border-default pb-4 md:pb-5  bg-gray-100">
             <h3 className="text-lg font-medium text-heading">Create Account</h3>
             <button
               type="button"
