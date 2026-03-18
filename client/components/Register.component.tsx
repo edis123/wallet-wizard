@@ -46,7 +46,7 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
       id="authentication-modal"
       tabIndex={-1}
       aria-hidden="false"
-     className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black/40"    >
+     className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-gray-100"    >
       <div className="relative p-4 w-full max-w-md max-h-full">
         {/* <!-- Modal content --> */}
         <div className="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
