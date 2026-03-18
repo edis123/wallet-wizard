@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const transactionItem = require("./routes/transactions");
 const categoryItem = require("./routes/categories");
-const userItem = reqire("./routes/accounts")
+const userItem = require("./routes/accounts")
 const title = require("./routes/title");
 const authRouting = require("./routes/auth");
 const authentication = require("./middleware/middleware.auth");
