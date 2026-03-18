@@ -19,8 +19,22 @@ const PORT = 3100
 //     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 //     allowedHeaders: ["Content-Type", "Authorization"],
 // }))
-app.use(cors())
-app.options("*",cors())
+const allowedOrigin ="https://wallet-wizard-zxes.onrender.com";
+
+app.use(
+  cors({
+    origin: allowedOrigin,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.options("*", cors({
+  origin: allowedOrigin,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
 app.use(express.json()) // for JSON body parsinng (IMPOSTANT)
 
 app.get("/api/home", (req, res)=>{
