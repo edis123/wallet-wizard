@@ -47,10 +47,10 @@ app.get("/api/home", (req, res)=>{
 //     res.status(500).json({error:"Failed to get Transaction"})
 //    }
 // })
-app.use("/api/title",title)
+
 app.use("/api/auth",authRouting)
 app.use(authentication)///enforces authemtication for the following operations
-
+app.use("/api/title",title)
 app.use("/api/categories",categoryItem)
 app.use("/api/transactions", transactionItem)
 
