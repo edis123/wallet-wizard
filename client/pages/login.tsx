@@ -3,7 +3,7 @@ import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import { fetchMethod } from "@/lib/api";
 import { authTokenMethods } from "@/lib/lib.auth";
-import Title from "@/components/Title";
+import Title from "@/components/Title.component";
 
 
 

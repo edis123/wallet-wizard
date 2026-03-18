@@ -2,7 +2,7 @@ import React from "react";
 import { fetchMethod } from "@/lib/api";
 import { useEffect, useState, useMemo } from "react";
 import { moneyMethods } from "@/lib/money";
-import Title from "./Title";
+import Title from "./Title.component";
 
 
 //defining tyypes for facilitation and usage
