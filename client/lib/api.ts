@@ -1,9 +1,9 @@
 
 import { authTokenMethods } from "./lib.auth";
 
-// const BASE = process.env.NEXT_PUBLIC_API_URL///next reads only NEXT_PUBLIC prefix...
+const BASE = process.env.NEXT_PUBLIC_API_URL///next reads only NEXT_PUBLIC prefix...
 
-const BASE = "https://wallet-wizard-backend-ge1c.onrender.com"
+// const BASE = "https://wallet-wizard-backend-ge1c.onrender.com"
 
 //fetching helper method that retruns data after url+ token is added
 async function fetching(path:string,options: RequestInit={}) {
