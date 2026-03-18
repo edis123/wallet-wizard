@@ -25,7 +25,7 @@ function Title() {
 
   if (error) return <div>{error}</div>;
 
-  return <div className="flex item-center">{title.title}</div>;
+  return <div className="flex item-center justify-center">{title.title}</div>;
 }
 
 export default Title;
