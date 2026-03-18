@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
+    "start": "node server.js",
+    "postinstall": "prisma generate",
+     "render-build": "prisma generate && prisma db push",
     "dev": "nodemon server.js"
   },
   "author": "Parug Demircioglu",
