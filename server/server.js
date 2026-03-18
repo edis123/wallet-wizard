@@ -12,14 +12,16 @@ const authentication = require("./middleware/middleware.auth");
 const app = express();
 const PORT = process.env.PORT || 3100;
 
-const corsOptions = {
-  origin: "https://wallet-wizard-zxes.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+const allowedOrigins = [
+  "https://wallet-wizard-zxes.onrender.com",
+  "https://wallet-wizard-frontend-s0e1.onrender.com",
+];
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://wallet-wizard-zxes.onrender.com");
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") {
@@ -27,6 +29,17 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(cors(corsOptions));
 app.use(express.json());
