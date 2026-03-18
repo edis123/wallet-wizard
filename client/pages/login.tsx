@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { fetchMethod } from "@/lib/api";
 import { authTokenMethods } from "@/lib/lib.auth";
 import Title from "@/components/Title.component";
+import Register from "@/components/Register.component";
 
 
 
@@ -16,6 +17,7 @@ function LoginPage(){
   const [name, setName] =useState("");
   const [error, setError] = useState("")
   const [busy, setBusy] = useState(false)
+  const [registerForm, setRegisterForm]= useState(false)
 
   async function onSubmit( event :React.SubmitEvent) {
 
@@ -55,7 +57,7 @@ function LoginPage(){
 return(
     <div className="min-h-screen bg-sky-900 flex items-center justify-center sepia-30">
     <div className="w-full max-w-md bg-orange-400 rounded-2xl shadow-2xl p-8 sepia">
-      <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
+      <h1 className="text-3xl font-bold text-center text-gray-700 mb-2">
 <Title/>
     </h1>
     <p className="text-center text-gray-700 mb-6">
@@ -98,9 +100,20 @@ return(
           {busy ? "Logging in..." : "Login"}
         </button>
 
-        {error && <div style={{ color: "crimson" }}>{error}</div>}
-      </form>
-    </div>
+        {error && <div style={{ color: "crimson" }}>{error}</div>} <button
+            type="button"
+            onClick={() => setRegisterForm(true)}
+            className="w-full bg-gray-800 text-white rounded-lg p-3 hover:bg-gray-900 transition"
+          >
+            Create account
+          </button>
+
+          {error && <div style={{ color: "crimson" }}>{error}</div>}
+        </form>
+      </div>
+
+      <Register open={registerForm} onClose={() => setRegisterForm(false)} />
+    
     </div>
   );
 
