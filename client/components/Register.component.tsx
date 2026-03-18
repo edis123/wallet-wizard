@@ -12,8 +12,8 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-
-  async function storeUser(event:React.SubmitEvent) {
+  const [success, setSuccess] = useState("");
+  async function storeUser(event: React.SubmitEvent) {
     event.preventDefault();
     setBusy(true);
     setError("");
@@ -30,8 +30,14 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         body: JSON.stringify(payload),
       });
-
-      console.log(newUser.name, "is in!!!");
+      if (newUser.token) {
+        setSuccess("Account Created!");
+        console.log(newUser.name, "is in!!!");
+        
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      }
     } catch (err) {
       if (err instanceof Error) setError(err.message);
       else setError("failed to register account!!!");
@@ -40,16 +46,17 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
     }
   }
 
-  if(!open)return null
+  if (!open) return null;
   return (
     <div
       id="authentication-modal"
       tabIndex={-1}
       aria-hidden="false"
-     className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black/40"    >
+      className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black/40"
+    >
       <div className="relative p-4 w-full max-w-md max-h-full">
         {/* <!-- Modal content --> */}
-        <div className="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6 bg-gray-100">
+        <div className="relative bg-neutral-primary-soft border border-default rounded-2xl shadow-sm p-4 md:p-6 bg-gray-100">
           {/* <!-- Modal header --> */}
           <div className="flex items-center justify-between border-b border-default pb-4 md:pb-5  bg-gray-100">
             <h3 className="text-lg font-medium text-heading">Create Account</h3>
@@ -126,6 +133,10 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
             >
               {busy ? "Creating..." : "Register Account"}
             </button>
+            {success && (
+              <div style={{ color: "green", marginTop: "10px" }}>{success}</div>
+            )}
+
             {/* <div className="text-sm font-medium text-body">Not registered? <a href="#" className="text-fg-brand hover:underline">Create account</a></div> */}
           </form>
         </div>
@@ -134,4 +145,4 @@ function Register({ open, onClose }: { open: boolean; onClose: () => void }) {
   );
 }
 
-export default Register
+export default Register;
