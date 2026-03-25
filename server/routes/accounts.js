@@ -11,7 +11,6 @@ const router = express.Router();
 router.get("/:id", async (req, res) => {
   const userId = req.params.id
 
-
   try{
     const user = await prisma.findUnique({
        where:{ userId}

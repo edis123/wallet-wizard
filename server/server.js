@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const transactionItem = require("./routes/transactions");
 const categoryItem = require("./routes/categories");
-// const userItem = require("./routes/accounts")
+const userItem = require("./routes/accounts")
 const title = require("./routes/title");
 const authRouting = require("./routes/auth");
 const authentication = require("./middleware/middleware.auth");
@@ -55,7 +55,7 @@ app.use("/api/title", title);
 app.use(authentication);
 app.use("/api/categories", categoryItem);
 app.use("/api/transactions", transactionItem);
-// app.use("/api/accounts",userItem)
+app.use("/api/accounts",userItem)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

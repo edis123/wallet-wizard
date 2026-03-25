@@ -172,6 +172,9 @@ function TransactionList({ categoryList, loadCategories }: Props) {
         method: "PUT",
         body: JSON.stringify(payload),
       });
+
+    const {userId} = updated
+      console.log("this is : ",userId)
       // const userData = await fetchMethod.fetching(`/api/accounts/${updated.userId}`,{
       //   method:"GET"
       // })
