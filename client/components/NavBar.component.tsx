@@ -1,3 +1,4 @@
+"use client";
 import React from "react"
 import { fetchMethod } from "@/lib/api" 
 import { authTokenMethods } from "@/lib/lib.auth"   
@@ -7,9 +8,14 @@ function NavBar(){
 
 const router = useRouter()
  
-const user = authTokenMethods.getUser()
+const [displayName, setDisplayName] = useState("Guest");
 
-const usersName = user?.name?.trim() || user?.email|| "USER...."
+  useEffect(() => {
+    const user = authTokenMethods.getUser();
+    if (user) {
+      setDisplayName(user.name?.trim() || user.email);
+    }
+  }, []);
 
 
   function logout(){
@@ -21,7 +27,7 @@ return(
 
     <div className="w-full bg-orange-500 text-white rounder flex justify-between items-center px-6 py-3">
       <div className="text-lg font-semibold">
-        {usersName || "Guest"}
+        {displayNameName || "Guest"}
       </div>
 
       <button
