@@ -27,7 +27,7 @@ return(
 
     <div className="w-full bg-orange-500 text-white rounder flex justify-between items-center px-6 py-3">
       <div className="text-lg font-semibold">
-        {displayNameName || "Guest"}
+        {displayName || "Guest"}
       </div>
 
       <button
