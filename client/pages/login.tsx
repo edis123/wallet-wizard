@@ -39,10 +39,7 @@ function LoginPage(){
         authTokenMethods.setToken(data.token)
         authTokenMethods.setUser({
           ...data.user,
-          displayName:
-            data.user.name && data.user.name.trim() === null
-              ? data.user.name
-              : data.user.email,
+         displayName: data.user.name?.trim() || data.user.email,
         });
 
         router.push("/test")///needs to change to homeage or dshboard
