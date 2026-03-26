@@ -12,9 +12,12 @@ const [displayName, setDisplayName] = useState("Guest");
 
   useEffect(() => {
     const user = authTokenMethods.getUser();
-    if (user) {
-      setDisplayName(user.name?.trim() || user.email);
+    if (!user?.name) {
+      setDisplayName(user?.email);
+    }else{
+      setDisplayName(user?.name)
     }
+
   }, []);
 
 
