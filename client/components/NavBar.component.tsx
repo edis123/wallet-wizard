@@ -10,17 +10,7 @@ const router = useRouter()
  
 const [displayName, setDisplayName] = useState("Guest");
 
-  useEffect(() => {
-    const user = authTokenMethods.getUser();
-      if (user) {
-    const display =
-      user.name && user.name.trim() !== ""
-        ? user.name
-        : user.email;
-
-    setDisplayName(display);
-  }
-  }, []);
+setDisplayName(displayName)
 
 
   function logout(){
