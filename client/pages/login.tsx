@@ -37,6 +37,7 @@ function LoginPage(){
         if(!data.token) throw new Error("Login did not retrun a token")
 
         authTokenMethods.setToken(data.token)
+        authTokenMethods.setUser(data.user)
 
         router.push("/test")///needs to change to homeage or dshboard
 

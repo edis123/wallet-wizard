@@ -55,7 +55,7 @@ app.use("/api/title", title);
 app.use(authentication);
 app.use("/api/categories", categoryItem);
 app.use("/api/transactions", transactionItem);
-app.use("/api/accounts",userItem)
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

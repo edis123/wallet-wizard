@@ -3,6 +3,7 @@ import { fetchMethod } from "@/lib/api";
 import { useEffect, useState, useMemo } from "react";
 import { moneyMethods } from "@/lib/money";
 import Title from "./Title.component";
+import NavBar from "./navBar";
 
 
 //defining tyypes for facilitation and usage
@@ -247,6 +248,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
 
   return (
     <div className="min-h-screen bg-sky-900 p-6 font-sans sepia-30">
+      <NavBar/>
       <div className="max-w-6xl mx-auto space-y-6 bg-sky-900">
         <div className=" bg-orange-400 rounded-2xl shadow p-6 flex items-center justify-center sepia">
             <div className="bg-orange-100 rounded-2xl shadow p-9 w-4xl">
