@@ -251,7 +251,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
     
       <div className="max-w-6xl mx-auto space-y-6 bg-sky-900">
         <div className=" grid bg-orange-400 rounded-2xl shadow p-6 flex items-center justify-center sepia">
-            <div className="bg-orange-100 rounded-2xl shadow p-9 w-4xl">
+            <div className="bg-orange-100 rounded-b-lg shadow p-9 w-4xl">
            <Title/>
             <p className="text-gray-500  flex items-center justify-center">Managment Tool</p>
               {/* <p className="text-gray-500  flex items-center justify-center">{userName}</p> */}

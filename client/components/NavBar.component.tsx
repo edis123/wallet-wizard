@@ -24,7 +24,7 @@ const [displayName, setDisplayName] = useState("Guest");
   
 return(
 
-    <div className="w-full bg-orange-500 text-white rounder-lg flex justify-between items-center px-6 py-3">
+    <div className="w-full bg-orange-500 text-white rounded-t-lg flex justify-between items-center px-6 py-3">
       <div className="text-lg font-semibold">
         {displayName || "Guest"}
       </div>
