@@ -5,20 +5,11 @@ import { useState ,useEffect} from "react"
 import { useRouter } from "next/router"
 function NavBar(){
 
-  
-  const [usersName, setUsersName] = useState("");
 const router = useRouter()
+ 
+const user = authTokenMethods.getUser()
 
-  useEffect(()=>{
-
-    const user = authTokenMethods.getUser()
-
-    if(user){
-        setUsersName(user.name?.trim()||user.email)
-    }
-
-  },[])
-
+const usersName = user?.name?.trim() || user?.email|| "USER...."
 
 
   function logout(){
@@ -28,7 +19,7 @@ const router = useRouter()
   
 return(
 
-    <div className="w-full bg-gray-900 text-white flex justify-between items-center px-6 py-3">
+    <div className="w-full bg-orange-500 text-white rounder flex justify-between items-center px-6 py-3">
       <div className="text-lg font-semibold">
         {usersName || "Guest"}
       </div>
