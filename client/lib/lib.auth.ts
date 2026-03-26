@@ -6,8 +6,9 @@ type UserData ={
  
     id:string,
     email:string,
-    name?: string 
+    name?: string |null
     currency?:string|"USD"
+    displayName?:string
 
 }
 
