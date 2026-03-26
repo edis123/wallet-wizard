@@ -37,15 +37,13 @@ function LoginPage(){
         if(!data.token) throw new Error("Login did not retrun a token")
 
         authTokenMethods.setToken(data.token)
-      const rawName = data.user.name?.trim();
-
-      authTokenMethods.setUser({
-        ...data.user,
-        displayName:
-          rawName && rawName.toUpperCase() !== "NULL"
-            ? rawName
-            : data.user.email,
-      });
+        authTokenMethods.setUser({
+          ...data.user,
+          displayName:
+            data.user.name && data.user.name.trim() === "NULL"
+              ? data.user.name
+              : data.user.email,
+        });
 
         router.push("/test")///needs to change to homeage or dshboard
 
