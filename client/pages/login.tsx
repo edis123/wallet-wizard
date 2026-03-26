@@ -42,7 +42,7 @@ function LoginPage(){
         authTokenMethods.setUser({
           ...data.user,
           displayName:
-           userName !== "NULL"
+           userName === "NULL"
               ? userName
               : data.user.email,
         });
