@@ -40,7 +40,7 @@ function LoginPage(){
         authTokenMethods.setUser({
           ...data.user,
           displayName:
-            data.user.name && data.user.name.trim() !== ""
+            data.user.name && data.user.name.trim() === ""
               ? data.user.name
               : data.user.email,
         });
