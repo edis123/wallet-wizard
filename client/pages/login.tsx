@@ -36,12 +36,14 @@ function LoginPage(){
     
         if(!data.token) throw new Error("Login did not retrun a token")
 
-        authTokenMethods.setToken(data.token)
+        authTokenMethods.setToken(data.token);
+        const userName  = data.user.name?.trim()
+
         authTokenMethods.setUser({
           ...data.user,
           displayName:
-            data.user.name && data.user.name.trim() === "NULL"
-              ? data.user.name
+           userName !== "NULL"
+              ? userName
               : data.user.email,
         });
 
