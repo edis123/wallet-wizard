@@ -3,7 +3,7 @@ import { fetchMethod } from "@/lib/api";
 import { useEffect, useState, useMemo } from "react";
 import { moneyMethods } from "@/lib/money";
 import Title from "./Title.component";
-import NavBar from "./navBar";
+import NavBar from "./NavBar";
 
 
 //defining tyypes for facilitation and usage
