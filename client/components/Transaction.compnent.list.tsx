@@ -248,7 +248,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
 
   return (
     <div className="min-h-screen bg-sky-900 p-6 font-sans sepia-30">
-      <NavBar/>
+    
       <div className="max-w-6xl mx-auto space-y-6 bg-sky-900">
         <div className=" bg-orange-400 rounded-2xl shadow p-6 flex items-center justify-center sepia">
             <div className="bg-orange-100 rounded-2xl shadow p-9 w-4xl">
@@ -256,7 +256,7 @@ function TransactionList({ categoryList, loadCategories }: Props) {
             <p className="text-gray-500  flex items-center justify-center">Managment Tool</p>
               {/* <p className="text-gray-500  flex items-center justify-center">{userName}</p> */}
           </div>
-
+          <NavBar/>
         </div>
 
         <div className="bg-mauve-700 rounded-2xl shadow-2xl p-4 border border-orange-400 border-6 sepia-40">
